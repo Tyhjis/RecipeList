@@ -1,21 +1,16 @@
 package tyhjis.recipeplanner;
 
-import tyhjis.recipeplanner.databaseconnection.SQLiteConnection;
-import tyhjis.recipeplanner.databasecontrollers.RecipeController;
+import tyhjis.recipeplanner.databaseconnection.Connector;
+import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
 
-import java.util.ArrayList;
+import java.sql.Connection;
 
 /**
  * Created by khansson on 17/05/2017.
  */
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        RecipeController controller = new RecipeController(new SQLiteConnection("testdb.db"));
-        controller.insertOne();
-        ArrayList<Recipe> list = controller.selectAll();
-        list.stream().forEach(recipe -> {
-            System.out.println(recipe);
-        });
+        Connector connector = new SQLiteConnector();
+        Connection conn = connector.getConnection("recipes.db");
     }
 }
