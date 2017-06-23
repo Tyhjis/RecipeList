@@ -1,16 +1,25 @@
 package tyhjis.recipeplanner;
 
-import tyhjis.recipeplanner.databaseconnection.Connector;
-import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
+import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
-import java.sql.Connection;
+public class App extends Application {
 
-/**
- * Created by khansson on 17/05/2017.
- */
-public class App {
     public static void main(String[] args) {
-        Connector connector = new SQLiteConnector();
-        Connection conn = connector.getConnection("recipes.db");
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/tyhjis/recipeplanner/app.fxml"));
+        Scene scene = new Scene(root);
+        primaryStage.setTitle("Recipe planner");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 }
