@@ -5,3 +5,5 @@ gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
 gradle/wrapper/gradle-wrapper.properties
+dump.sql
+*.db

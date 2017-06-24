@@ -25,12 +25,17 @@ public class CategoryService {
         return null;
     }
 
-    public void insertCategory(String name) {
+    public void insertCategory(String name) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO categories (name) VALUES (?)");
+        statement.setString(1, name);
+        statement.executeUpdate();
+    }
+
+    public void deleteCategory(int id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO categories (name) VALUES (?)");
-            statement.setString(1, name);
-            statement.executeUpdate();
-        } catch(SQLException e) {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM categories WHERE id=?");
+            statement.execute();
+        } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
     }
