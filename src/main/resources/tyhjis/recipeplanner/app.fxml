@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <GridPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="tyhjis.recipeplanner.categories.CategoryController"
-            prefHeight="640.0" prefWidth="860.0">
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="tyhjis.recipeplanner.categories.CategoryController">
         <TextField GridPane.columnIndex="0" GridPane.rowIndex="0"
                    GridPane.columnSpan="2"
                    fx:id="categoryName" />
+
         <Button GridPane.columnIndex="0" GridPane.rowIndex="1"
-                GridPane.columnSpan="2"
                 fx:id="categoryButton"
                 onAction="#addCategory">Add</Button>
+
+        <TextField GridPane.columnIndex="0" GridPane.rowIndex="2"
+              GridPane.columnSpan="2" fx:id="selectedCategory" disable="true"/>
+
+        <Button GridPane.columnIndex="0" GridPane.rowIndex="3"
+                fx:id="deleteCategoryButton"
+                onAction="#deleteCategory" disable="true">Delete</Button>
+
+        <Button GridPane.columnIndex="1" GridPane.rowIndex="3"
+                fx:id="updateCategoryButton"
+                onAction="#updateCategory"
+                disable="true">Update</Button>
+
         <ListView GridPane.columnIndex="3" GridPane.rowIndex="0"
-                  GridPane.columnSpan="2" GridPane.vgrow="ALWAYS"
+                  GridPane.columnSpan="2" GridPane.rowSpan="10"
                   fx:id="categoryListBox" />
 </GridPane>

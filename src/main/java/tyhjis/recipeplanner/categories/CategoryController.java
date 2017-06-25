@@ -1,17 +1,15 @@
 package tyhjis.recipeplanner.categories;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import org.sqlite.util.StringUtils;
 import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
 
 import java.net.URL;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class CategoryController implements Initializable {
@@ -23,7 +21,13 @@ public class CategoryController implements Initializable {
     private TextField categoryName;
 
     @FXML
-    private Button categoryButton;
+    private TextField selectedCategory;
+
+    @FXML
+    private Button deleteCategoryButton;
+
+    @FXML
+    private Button updateCategoryButton;
 
     private CategoryService service;
 
@@ -39,6 +43,49 @@ public class CategoryController implements Initializable {
         gatherCategoryList();
     }
 
+    @FXML
+    private void addCategory() {
+        Category category = new Category();
+        category.setName(categoryName.getText());
+        try {
+            service.insertCategory(category);
+            emptyCategoryList();
+            gatherCategoryList();
+            scrollToBottom();
+            categoryName.setText("");
+        } catch(Exception e) {
+            displayAlert("Error inserting a new category.", e.getMessage());
+        }
+    }
+
+    @FXML
+    private void deleteCategory() {
+        try {
+            service.deleteCategory(categoryListBox.getSelectionModel().getSelectedItem());
+        } catch (Exception e) {
+            displayAlert("Error occurred while deleting a category.", e.getMessage());
+        } finally {
+            emptyCategoryList();
+            gatherCategoryList();
+            setUpdateAndDeleteControls(true, "");
+        }
+    }
+
+    @FXML
+    private void updateCategory() {
+        Category category = categoryListBox.getSelectionModel().getSelectedItem();
+        category.setName(selectedCategory.getText());
+        try {
+            service.updateCategory(category);
+        } catch(Exception e) {
+            displayAlert("Error occurred while updating a category.", e.getMessage());
+        } finally {
+            emptyCategoryList();
+            gatherCategoryList();
+            setUpdateAndDeleteControls(true, "");
+        }
+    }
+
     private void configureListView() {
         categoryListBox.setCellFactory(param -> new ListCell<Category>() {
             @Override
@@ -51,28 +98,19 @@ public class CategoryController implements Initializable {
                 }
             }
         });
+
+        categoryListBox.setOnMouseClicked(event -> setUpdateAndDeleteControls(false, categoryListBox.getSelectionModel().getSelectedItem().getName()));
     }
 
-    private void gatherCategoryList() {
-        categoryList.addAll(service.selectAll());
+    private void setUpdateAndDeleteControls(boolean disabled, String selectedText) {
+        selectedCategory.setText(selectedText);
+        selectedCategory.setDisable(disabled);
+        deleteCategoryButton.setDisable(disabled);
+        updateCategoryButton.setDisable(disabled);
     }
 
-    private void emptyCategoryList() {
-        categoryList.removeAll(categoryList);
-    }
-
-    @FXML
-    private void addCategory() {
-        String name = categoryName.getText();
-        if(org.apache.commons.lang3.StringUtils.isNotBlank(name)) {
-            try {
-                service.insertCategory(name);
-                emptyCategoryList();
-                gatherCategoryList();
-            } catch(SQLException e) {
-                displayAlert("Error inserting category.", e.getMessage());
-            }
-        }
+    private void scrollToBottom() {
+        Platform.runLater(() -> categoryListBox.scrollTo(categoryList.size() - 1));
     }
 
     private void displayAlert(String title, String content) {
@@ -80,5 +118,17 @@ public class CategoryController implements Initializable {
         insertAlert.setTitle(title);
         insertAlert.setContentText(content);
         insertAlert.show();
+    }
+
+    private void gatherCategoryList() {
+        try {
+            categoryList.addAll(service.selectAll());
+        } catch(Exception e) {
+            displayAlert("Error occurred while fetching categories.", e.getMessage());
+        }
+    }
+
+    private void emptyCategoryList() {
+        categoryList.removeAll(categoryList);
     }
 }

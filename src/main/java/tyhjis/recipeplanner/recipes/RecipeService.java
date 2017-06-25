@@ -41,8 +41,12 @@ public class RecipeService {
         return null;
     }
 
-    public void insert(Recipe recipe) {
-
+    public void insert(Recipe recipe) throws SQLException {
+        String sql = "INSERT INTO recipes (name, instructions) values (?, ?)";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, recipe.getName());
+        statement.setString(2, recipe.getInstructions());
+        statement.execute();
     }
 
     private void addCategories(Recipe recipe) {
