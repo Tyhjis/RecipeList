@@ -1,8 +1,6 @@
 package tyhjis.recipeplanner;
 
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,7 +14,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/tyhjis/recipeplanner/app.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/tyhjis/recipeplanner/categories.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setTitle("Recipe planner");
         primaryStage.setScene(scene);
