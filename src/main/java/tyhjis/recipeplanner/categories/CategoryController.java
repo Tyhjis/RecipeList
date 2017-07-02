@@ -52,9 +52,10 @@ public class CategoryController implements Initializable {
             emptyCategoryList();
             gatherCategoryList();
             scrollToBottom();
-            categoryName.setText("");
         } catch(Exception e) {
             displayAlert("Error inserting a new category.", e.getMessage());
+        } finally {
+            categoryName.setText("");
         }
     }
 

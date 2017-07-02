@@ -20,23 +20,36 @@ public class CategoryService {
         return createCategoryList(statement.executeQuery());
     }
 
-    public void insertCategory(Category category) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("INSERT INTO categories (name) VALUES (?)");
-        statement.setString(1, category.getName());
-        statement.executeUpdate();
+    public void insertCategory(Category category) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO categories (name) VALUES (?)");
+            statement.setString(1, category.getName());
+            statement.executeUpdate();
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void deleteCategory(Category category) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("DELETE FROM categories WHERE id=?");
-        statement.setInt(1, category.getId());
-        statement.execute();
+    public void deleteCategory(Category category) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM categories WHERE id=?");
+            statement.setInt(1, category.getId());
+            statement.execute();
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
-    public void updateCategory(Category category) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement("UPDATE categories SET name = ? WHERE id = ?");
-        statement.setString(1, category.getName());
-        statement.setInt(2, category.getId());
-        statement.execute();
+    public void updateCategory(Category category) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE categories SET name = ? WHERE id = ?");
+            statement.setString(1, category.getName());
+            statement.setInt(2, category.getId());
+            statement.execute();
+        } catch(SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private List<Category> createCategoryList(ResultSet rs) throws SQLException {
