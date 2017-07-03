@@ -1,6 +1,8 @@
 package tyhjis.recipeplanner.categories;
 
-public class Category {
+import tyhjis.recipeplanner.common.DatabaseObject;
+
+public class Category extends DatabaseObject {
 
     private int id;
 

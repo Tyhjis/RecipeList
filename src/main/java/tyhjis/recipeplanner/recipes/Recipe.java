@@ -1,11 +1,12 @@
 package tyhjis.recipeplanner.recipes;
 
 import tyhjis.recipeplanner.categories.Category;
+import tyhjis.recipeplanner.common.DatabaseObject;
 import tyhjis.recipeplanner.ingredients.Ingredient;
 
 import java.util.List;
 
-public class Recipe {
+public class Recipe extends DatabaseObject {
     private int id;
     private String name;
     private String instructions;

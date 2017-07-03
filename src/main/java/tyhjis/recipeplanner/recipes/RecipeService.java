@@ -1,59 +1,6 @@
 package tyhjis.recipeplanner.recipes;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import tyhjis.recipeplanner.common.DatabaseService;
 
-public class RecipeService {
-
-    Connection connection;
-
-    public RecipeService(Connection connection) {
-        this.connection = connection;
-    }
-
-    public List<Recipe> getAll() {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM recipes");
-            return createRecipeList(statement.executeQuery());
-        } catch(SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return null;
-    }
-
-    private List<Recipe> createRecipeList(ResultSet rs) throws SQLException {
-        List<Recipe> recipeList = new ArrayList<>();
-        Recipe recipe;
-        while(rs.next()){
-            recipe = new Recipe();
-            recipe.setId(rs.getInt("id"));
-            recipe.setName(rs.getString("name"));
-            recipeList.add(recipe);
-        }
-        return recipeList;
-    }
-
-    public Recipe getById(int id) {
-        return null;
-    }
-
-    public void insert(Recipe recipe) throws SQLException {
-        String sql = "INSERT INTO recipes (name, instructions) values (?, ?)";
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, recipe.getName());
-        statement.setString(2, recipe.getInstructions());
-        statement.execute();
-    }
-
-    private void addCategories(Recipe recipe) {
-
-    }
-
-    private void addIngredients(Recipe recipe) {
-
-    }
+public interface RecipeService extends DatabaseService<Recipe> {
 }

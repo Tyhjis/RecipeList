@@ -1,9 +1,8 @@
 package tyhjis.recipeplanner.ingredients;
 
-/**
- * Created by khansson on 23/06/2017.
- */
-public class Ingredient {
+import tyhjis.recipeplanner.common.DatabaseObject;
+
+public class Ingredient extends DatabaseObject {
     private int id;
     private String name;
 

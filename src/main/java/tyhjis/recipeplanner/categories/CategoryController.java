@@ -37,7 +37,7 @@ public class CategoryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(location.toString());
         Connection connection = SQLiteConnector.getConnection("recipes.db");
-        service = new CategoryService(connection);
+        service = new CategoryServiceImpl(connection);
         configureListView();
         categoryListBox.setItems(categoryList);
         gatherCategoryList();
@@ -48,7 +48,7 @@ public class CategoryController implements Initializable {
         Category category = new Category();
         category.setName(categoryName.getText());
         try {
-            service.insertCategory(category);
+            service.insert(category);
             emptyCategoryList();
             gatherCategoryList();
             scrollToBottom();
@@ -62,7 +62,7 @@ public class CategoryController implements Initializable {
     @FXML
     private void deleteCategory() {
         try {
-            service.deleteCategory(categoryListBox.getSelectionModel().getSelectedItem());
+            service.delete(categoryListBox.getSelectionModel().getSelectedItem());
         } catch (Exception e) {
             displayAlert("Error occurred while deleting a category.", e.getMessage());
         } finally {
@@ -77,7 +77,7 @@ public class CategoryController implements Initializable {
         Category category = categoryListBox.getSelectionModel().getSelectedItem();
         category.setName(selectedCategory.getText());
         try {
-            service.updateCategory(category);
+            service.update(category);
         } catch(Exception e) {
             displayAlert("Error occurred while updating a category.", e.getMessage());
         } finally {
