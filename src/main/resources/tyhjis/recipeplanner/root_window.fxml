@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
-<?import tyhjis.recipeplanner.Navigation ?>
+<?import tyhjis.recipeplanner.categories.CategoryController ?>
 
-<HBox xmlns="http://javafx.com/javafx">
-    <Navigation />
-</HBox>
+<?import javafx.scene.control.Button?>
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         type="javafx.scene.layout.VBox">
+    <HBox>
+        <Button fx:id="recipeSelector">Recipes</Button>
+        <Button fx:id="categorySelector">Categories</Button>
+        <Button fx:id="ingredientSelector">Ingredients</Button>
+    </HBox>
+    <CategoryController visible="#categoriesSelected"/>
+</fx:root>

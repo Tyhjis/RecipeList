@@ -4,15 +4,18 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ResourceBundle;
 
-public class CategoryController implements Initializable {
+public class CategoryController extends GridPane implements Initializable {
 
     @FXML
     private ListView<Category> categoryListBox;
@@ -24,18 +27,28 @@ public class CategoryController implements Initializable {
     private TextField selectedCategory;
 
     @FXML
-    private Button deleteCategoryButton;
-
-    @FXML
-    private Button updateCategoryButton;
+    private Button deleteCategoryButton, categoryButton, updateCategoryButton;
 
     private CategoryService service;
 
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
 
+    public CategoryController() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tyhjis/recipeplanner/categories.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+            categoryButton.setOnAction(event -> addCategory());
+            deleteCategoryButton.setOnAction(event -> deleteCategory());
+            updateCategoryButton.setOnAction(event -> updateCategory());
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(location.toString());
         Connection connection = SQLiteConnector.getConnection("recipes.db");
         service = new CategoryServiceImpl(connection);
         configureListView();

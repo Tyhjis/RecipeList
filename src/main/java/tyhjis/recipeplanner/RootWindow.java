@@ -3,17 +3,27 @@ package tyhjis.recipeplanner;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import tyhjis.recipeplanner.categories.CategoryController;
 
 import java.io.IOException;
 
-public class Navigation extends HBox {
+public class RootWindow extends VBox {
     @FXML
     private Button recipeSelector, categorySelector, ingredientSelector;
 
-    public Navigation() {
+    @FXML
+    private CategoryController categoryController;
+
+    public String selectedPane;
+
+    @FXML
+    private boolean categoriesSelected;
+
+
+    public RootWindow() {
         FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/tyhjis/recipeplanner/navigation.fxml"));
+                getClass().getResource("/tyhjis/recipeplanner/root_window.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -28,6 +38,12 @@ public class Navigation extends HBox {
 
     @FXML
     public void selectView(String selection) {
-        System.out.println(selection);
+        switch(selection) {
+            case "Categories":
+                categoriesSelected = true;
+                break;
+            default:
+                categoriesSelected = false;
+        }
     }
 }
