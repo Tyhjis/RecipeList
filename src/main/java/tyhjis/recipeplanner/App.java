@@ -16,10 +16,9 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Thread.setDefaultUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler());
-        Parent root = FXMLLoader.load(getClass().getResource("/tyhjis/recipeplanner/categories.fxml"));
-        Scene scene = new Scene(root);
+        Parent root = FXMLLoader.load(getClass().getResource("/tyhjis/recipeplanner/root_window.fxml"));
+        primaryStage.setScene(new Scene(root));
         primaryStage.setTitle("Recipe planner");
-        primaryStage.setScene(scene);
         primaryStage.show();
     }
 }

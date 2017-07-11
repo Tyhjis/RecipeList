@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import tyhjis.recipeplanner.Navigation ?>
+
+<HBox xmlns="http://javafx.com/javafx">
+    <Navigation />
+</HBox>
