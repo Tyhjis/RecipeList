@@ -43,6 +43,7 @@ public class IngredientServiceImpl implements IngredientService {
             PreparedStatement statement = connection.prepareStatement("UPDATE ingredients SET name = ? WHERE id = ?");
             statement.setString(1, updated.getName());
             statement.setInt(2, updated.getId());
+            statement.execute();
         } catch(SQLException e) {
             throw new RuntimeException(e);
         }
