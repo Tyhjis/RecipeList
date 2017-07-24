@@ -1,3 +1,3 @@
-#recipe-planner
+# recipe-planner
 
 A hobby project.
