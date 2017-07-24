@@ -2,7 +2,7 @@ package tyhjis.recipeplanner.common;
 
 import java.util.List;
 
-public interface DatabaseService<T extends DatabaseObject> {
+public interface ApplicationService<T extends DatabaseObject> {
     void insert(T created);
     void delete(T deleted);
     void update(T updated);

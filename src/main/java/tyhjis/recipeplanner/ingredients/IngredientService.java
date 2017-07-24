@@ -1,6 +1,6 @@
 package tyhjis.recipeplanner.ingredients;
 
-import tyhjis.recipeplanner.common.DatabaseService;
+import tyhjis.recipeplanner.common.ApplicationService;
 
-public interface IngredientService extends DatabaseService<Ingredient> {
+public interface IngredientService extends ApplicationService<Ingredient> {
 }
