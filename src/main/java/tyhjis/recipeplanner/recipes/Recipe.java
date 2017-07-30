@@ -6,7 +6,7 @@ import tyhjis.recipeplanner.ingredients.Ingredient;
 
 import java.util.List;
 
-public class Recipe extends DatabaseObject {
+public class Recipe implements DatabaseObject {
     private int id;
     private String name;
     private String instructions;
@@ -51,5 +51,30 @@ public class Recipe extends DatabaseObject {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    @Override
+    public void save() {
+
+    }
+
+    @Override
+    public void delete() {
+
+    }
+
+    @Override
+    public void update() {
+
+    }
+
+    @Override
+    public DatabaseObject find(long id) {
+        return null;
+    }
+
+    @Override
+    public List<DatabaseObject> selectAll() {
+        return null;
     }
 }

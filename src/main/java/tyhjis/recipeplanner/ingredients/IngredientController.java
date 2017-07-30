@@ -13,6 +13,8 @@ import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class IngredientController extends GridPane implements Initializable {
@@ -135,7 +137,9 @@ public class IngredientController extends GridPane implements Initializable {
 
     private void gatherIngredientList() {
         try {
-            ingredientList.addAll(service.selectAll());
+            List<Ingredient> foundIngredients = new ArrayList<>();
+            service.selectAll().forEach(dbobj -> foundIngredients.add((Ingredient) dbobj));
+            ingredientList.addAll(foundIngredients);
         } catch(Exception e) {
             displayAlert("Error occurred while fetching categories.", e.getMessage());
         }

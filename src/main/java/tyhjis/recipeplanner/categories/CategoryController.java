@@ -8,11 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import tyhjis.recipeplanner.common.ApplicationService;
+import tyhjis.recipeplanner.common.DatabaseServiceImpl;
 import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CategoryController extends GridPane implements Initializable {
@@ -29,7 +33,7 @@ public class CategoryController extends GridPane implements Initializable {
     @FXML
     private Button deleteCategoryButton, categoryButton, updateCategoryButton;
 
-    private CategoryService service;
+    private ApplicationService service;
 
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
 
@@ -49,8 +53,7 @@ public class CategoryController extends GridPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Connection connection = SQLiteConnector.getConnection("recipes.db");
-        service = new CategoryServiceImpl(connection);
+        service = new DatabaseServiceImpl();
         configureListView();
         categoryListBox.setItems(categoryList);
         gatherCategoryList();
@@ -136,7 +139,11 @@ public class CategoryController extends GridPane implements Initializable {
 
     private void gatherCategoryList() {
         try {
-            categoryList.addAll(service.selectAll());
+            List<Category> foundCategories = new ArrayList<>();
+            service.selectAll().forEach(dbobject -> {
+               foundCategories.add((Category) dbobject);
+            });
+            categoryList.addAll(foundCategories);
         } catch(Exception e) {
             displayAlert("Error occurred while fetching categories.", e.getMessage());
         }
