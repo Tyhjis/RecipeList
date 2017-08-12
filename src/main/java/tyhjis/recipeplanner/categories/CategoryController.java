@@ -10,13 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import tyhjis.recipeplanner.common.ApplicationService;
 import tyhjis.recipeplanner.common.DatabaseServiceImpl;
-import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class CategoryController extends GridPane implements Initializable {
@@ -139,11 +135,7 @@ public class CategoryController extends GridPane implements Initializable {
 
     private void gatherCategoryList() {
         try {
-            List<Category> foundCategories = new ArrayList<>();
-            service.selectAll().forEach(dbobject -> {
-               foundCategories.add((Category) dbobject);
-            });
-            categoryList.addAll(foundCategories);
+            categoryList.addAll(Category.selectAll());
         } catch(Exception e) {
             displayAlert("Error occurred while fetching categories.", e.getMessage());
         }

@@ -1,5 +1,8 @@
 package tyhjis.recipeplanner.recipes;
 
+import tyhjis.recipeplanner.common.ApplicationService;
+import tyhjis.recipeplanner.common.DatabaseObject;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecipeServiceImpl implements RecipeService {
+public class RecipeServiceImpl implements ApplicationService {
 
     Connection connection;
 
@@ -41,21 +44,6 @@ public class RecipeServiceImpl implements RecipeService {
         }
     }
 
-    @Override
-    public void delete(Recipe deleted) {
-
-    }
-
-    @Override
-    public void update(Recipe updated) {
-
-    }
-
-    @Override
-    public Recipe find(int id) {
-        return null;
-    }
-
     private List<Recipe> createRecipeList(ResultSet rs) throws SQLException {
         List<Recipe> recipeList = new ArrayList<>();
         Recipe recipe;
@@ -66,5 +54,20 @@ public class RecipeServiceImpl implements RecipeService {
             recipeList.add(recipe);
         }
         return recipeList;
+    }
+
+    @Override
+    public void insert(DatabaseObject created) {
+        
+    }
+
+    @Override
+    public void delete(DatabaseObject deleted) {
+
+    }
+
+    @Override
+    public void update(DatabaseObject updated) {
+
     }
 }

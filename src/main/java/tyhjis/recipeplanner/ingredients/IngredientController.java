@@ -8,13 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import tyhjis.recipeplanner.databaseconnection.SQLiteConnector;
+import tyhjis.recipeplanner.common.ApplicationService;
+import tyhjis.recipeplanner.common.DatabaseServiceImpl;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class IngredientController extends GridPane implements Initializable {
@@ -28,11 +26,12 @@ public class IngredientController extends GridPane implements Initializable {
     @FXML
     private ListView<Ingredient> ingredientListBox;
 
-    private IngredientService service;
+    private ApplicationService service;
 
     private ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();;
 
     public IngredientController() {
+        service = new DatabaseServiceImpl();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tyhjis/recipeplanner/ingredients.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -48,8 +47,6 @@ public class IngredientController extends GridPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Connection connection = SQLiteConnector.getConnection("recipes.db");
-        service = new IngredientServiceImpl(connection);
         configureListView();
         ingredientListBox.setItems(ingredientList);
         gatherIngredientList();
@@ -137,9 +134,7 @@ public class IngredientController extends GridPane implements Initializable {
 
     private void gatherIngredientList() {
         try {
-            List<Ingredient> foundIngredients = new ArrayList<>();
-            service.selectAll().forEach(dbobj -> foundIngredients.add((Ingredient) dbobj));
-            ingredientList.addAll(foundIngredients);
+            ingredientList.addAll(Ingredient.selectAll());
         } catch(Exception e) {
             displayAlert("Error occurred while fetching categories.", e.getMessage());
         }
